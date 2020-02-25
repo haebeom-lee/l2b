@@ -104,8 +104,7 @@ The results from running this repo (average over single run, total 1000 episodes
 | ------| ---------------- | ----------------- | ------------------ | ------------------- |
 | MAML | 72.23±0.67         | 47.19±0.63             | 66.95±0.71              | 66.82±0.73           |
 | Meta-SGD | 72.93±0.66          | 47.63±0.73             | 68.04±0.67      | 66.45±0.63           |
-| Bayesian-TAML | __74.97±0.62__          | __52.25±0.68__             | __71.27±0.59__
-| __72.89±0.62__           |
+| Bayesian-TAML | __74.97±0.62__          | __52.25±0.68__             | __71.27±0.59__ | __72.89±0.62__           |
 
 ### Balancing Variables
 While running the code, you can see the tendency of the balancing variables every 1000 iterations. Below shows the example tendency of __gamma__ for each layer over 10 randomly sampled tasks. As you can see, gamma increases as the task size (N) gets larger.
