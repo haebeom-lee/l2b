@@ -6,7 +6,7 @@ class Data:
     self.dataset_name = dataset_name
     path = os.path.join('data', dataset_name)
 
-    if dataset_name in ['cifar', 'mimgnet']:
+    if dataset_name in ['cifar', 'mimgnet', 'aircraft', 'quickdraw', 'vgg_flower']:
       # meta-training set
       x = np.load(os.path.join(path, 'train.npy'), encoding='bytes')
       self.C_mtr = len(x)
@@ -14,10 +14,11 @@ class Data:
       self.x_mtr = [np.reshape(x[i], [self.N_mtr[i], -1]) for i in range(self.C_mtr)]
 
     # meta-validation set
-    x = np.load(os.path.join(path, 'valid.npy'), encoding='bytes')
-    self.C_mval = len(x)
-    self.N_mval = [len(xx) for xx in x]
-    self.x_mval = [np.reshape(x[i], [self.N_mval[i], -1]) for i in range(self.C_mval)]
+    if not dataset_name in ['traffic', 'fashion-mnist']:
+      x = np.load(os.path.join(path, 'valid.npy'), encoding='bytes')
+      self.C_mval = len(x)
+      self.N_mval = [len(xx) for xx in x]
+      self.x_mval = [np.reshape(x[i], [self.N_mval[i], -1]) for i in range(self.C_mval)]
 
     # meta-test set
     x = np.load(os.path.join(path, 'test.npy'), encoding='bytes')
@@ -114,3 +115,4 @@ class Data:
     yte_all = np.stack(yte_list, 0)
 
     return xtr_all, ytr_all, xte_all, yte_all
+
