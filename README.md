@@ -88,6 +88,25 @@ $ python main.py \
   --n_test_episodes 1000 \
   --alpha_on --omega_on --gamma_on --z_on --n_mc_samples 10
 ```
+
+3. __Multi-dataset__ experiment
+```
+# Meta-training
+$ python main.py \
+ --gpu_id 0 \
+ --id_dataset 'aircraft, quickdraw, vgg_flower' --ood_dataset 'traffic, fashion-mnist' \
+ --savedir "./results/multi/taml" --mode 'meta_train' --metabatch 3 --n_steps 5 \
+ --way 10 --max_shot 50 --query 15 --n_train_iters 60000 -meta_lr 1e-3 \
+ --alpha_on --omega_on --gamma_on --z_on 
+
+# Meta-testing
+$ python main.py \
+ --gpu_id 0 \
+ --id_dataset 'aircraft, quickdraw, vgg_flower' --ood_dataset 'traffic, fashion-mnist' \
+ --savedir "./results/multi/taml" --mode 'meta_test' --metabatch 3 --n_steps 10 \
+ --way 10 --max_shot 50 --query 15 --n_test_episode 1000 \
+ --alpha_on --omega_on --gamma_on --z_on --n_mc_samples 10
+```
 - Take a look at the folder ```./runfiles``` for the bash script files of MAML and Meta-SGD models.
 
 ## Results
@@ -98,6 +117,12 @@ The results in the main paper (average over three independent runs, total 9000 (
 | Meta-SGD | 72.71±0.21          | 46.45±0.24             | 69.95±0.20               | 65.94±0.22           |
 | Bayesian-TAML | __75.15±0.20__         | __51.87±0.23__             | __71.46±0.19__               | __71.71±0.21__           |
 
+|               | Aircarft         | Quickdraw         | VGG-Flower         | Traffic Signs       | Fashion-MNIST      |
+| ------        | ---------------- | ----------------- | ------------------ | ------------------- |------------------- |
+| MAML          | 48.60±0.17       | 69.02±0.18        | 60.38±0.16         | 51.96±0.22          |63.10±0.15          |
+| Meta-SGD      | 49.71±0.17       | 70.26±0.16        | 59.41±0.27         | 52.07±0.35          |62.71±0.25          |
+| Bayesian-TAML | __54.43±0.16__   | __72.03±0.16__    | __67.72±0.16__     | __64.81±0.21__      |__68.94±0.13__      |
+
 The results from running this repo (average over single run, total 1000 episodes):
 
 |       | CIFAR-FS| SVHN | miniImageNet| CUB |
@@ -105,6 +130,12 @@ The results from running this repo (average over single run, total 1000 episodes
 | MAML | 72.23±0.67         | 47.19±0.63             | 66.95±0.71              | 66.82±0.73           |
 | Meta-SGD | 72.93±0.66          | 47.63±0.73             | 68.04±0.67      | 66.45±0.63           |
 | Bayesian-TAML | __74.97±0.62__          | __52.25±0.68__             | __71.27±0.59__ | __72.89±0.62__           |
+
+|               | Aircarft         | Quickdraw         | VGG-Flower         | Traffic Signs       | Fashion-MNIST      |
+| ------        | ---------------- | ----------------- | ------------------ | ------------------- |------------------- |
+| MAML          | 48.17±0.57       | 68.57±0.60        | 60.68±0.53         | 52.37±0.78          |62.57±0.48          |
+| Meta-SGD      | 51.76±0.61       | 70.05±0.54        | 64.28±0.60         | 50.89±0.1.02         |62.83±0.64          |
+| Bayesian-TAML | __55.70±0.53__   | __72.40±0.50__    | __68.39±0.50__     | __64.17±0.74__      |__67.60±0.47__      |
 
 ### Balancing Variables
 While running the code, you can see the tendency of the balancing variables every 1000 iterations. Below shows the example tendency of __gamma__ for each layer over 10 randomly sampled tasks. As you can see, gamma increases as the task size (N) gets larger.
@@ -152,6 +183,3 @@ If you found the provided code useful, please cite our work.
     year={2020}
 }
 ```
-
-### TODO
-- Provide the code for Multi-dataset experiments
