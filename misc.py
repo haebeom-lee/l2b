@@ -2,6 +2,9 @@ from accumulator import Accumulator
 import numpy as np
 import tensorflow as tf
 
+def str2list(s):
+  return s.replace(" ","").split(',')
+
 # for gradient clipping
 def get_train_op(optim, loss, global_step=None, clip=None, var_list=None):
   update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
@@ -16,7 +19,7 @@ def get_train_op(optim, loss, global_step=None, clip=None, var_list=None):
 def print_balancing_variables(
     args, flag, episode, ntask, omega, gamma, logfile):
 
-  line = '\n%s' % flag
+  line = '\n%s '%(flag)
   print(line)
   logfile.write(line + '\n')
 

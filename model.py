@@ -3,9 +3,9 @@ from encoder import InferenceNetwork
 
 class LearningToBalance:
   def __init__(self, args):
-    if args.id_dataset == 'cifar':
+    if args.id_dataset[0] in ['cifar', 'aircraft']:
       self.xdim, self.input_channel, self.n_channel = 32, 3, 32
-    elif args.id_dataset == 'mimgnet':
+    elif args.id_dataset[0] == 'mimgnet':
       self.xdim, self.input_channel, self.n_channel = 84, 3, 32
     else:
       raise ValueError("Invalid in-dist. dataset: %s" % args.id_dataset)

@@ -4,9 +4,9 @@ from layers import *
 # inference network for generating the three balancing variables
 class InferenceNetwork:
   def __init__(self, args):
-    if args.id_dataset == 'cifar':
+    if args.id_dataset[0] == 'cifar' or len(args.id_dataset[0]) > 1:
       self.xdim, self.input_channel, self.n_channel = 32, 3, 32
-    elif args.id_dataset == 'mimgnet':
+    elif args.id_dataset[0] == 'mimgnet':
       self.xdim, self.input_channel, self.n_channel = 84, 3, 32
     else:
       raise ValueError("Invalid in-dist. dataset: %s" % args.id_dataset)
@@ -19,6 +19,7 @@ class InferenceNetwork:
     self.gamma_on = args.gamma_on
     self.omega_on = args.omega_on
 
+    self.s_on = True if len(args.id_dataset) > 1 else False
   # Compute element-wise sample mean, var., and set cardinality
   # then, return the concatenation of them.
   def _statistics_pooling(self, x, N):
@@ -74,10 +75,12 @@ class InferenceNetwork:
     s1 = dense(s, 64, name=name+'/dense_omega', reuse=reuse)
     s1 = relu(s1)
     odim = 1
-    mu_omega = dense(s1, odim, name=name+'/mu_omega', reuse=reuse)
-    sigma_omega = dense(s1, odim, name=name+'/sigma_omega', reuse=reuse)
+    s_o = s if self.s_on else s1
+    mu_omega = dense(s_o, odim, name=name+'/mu_omega', reuse=reuse)
+    sigma_omega = dense(s_o, odim, name=name+'/sigma_omega', reuse=reuse)
     mu_omega, sigma_omega = tf.squeeze(mu_omega), tf.squeeze(sigma_omega)
     q_omega = normal(mu_omega, softplus(sigma_omega))
+
 
     # generate gamma (from statistics pooling 2)
     v1 = dense(v, 64, name=name+'/dense_gamma', reuse=reuse)
