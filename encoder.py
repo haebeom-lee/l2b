@@ -4,7 +4,7 @@ from layers import *
 # inference network for generating the three balancing variables
 class InferenceNetwork:
   def __init__(self, args):
-    if args.id_dataset[0] == 'cifar' or len(args.id_dataset[0]) > 1:
+    if args.id_dataset[0] == 'cifar' or len(args.id_dataset) > 1:
       self.xdim, self.input_channel, self.n_channel = 32, 3, 32
     elif args.id_dataset[0] == 'mimgnet':
       self.xdim, self.input_channel, self.n_channel = 84, 3, 32
