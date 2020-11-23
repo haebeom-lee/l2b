@@ -29,21 +29,21 @@ def download_file(url, filename):
 
 if not os.path.exists("train.npy"):
     print("Downloading train.npy of quickdraw\n")
-    download_file('https://www.dropbox.com/s/y670vnuvj7z4nym/train.npy?dl=1','train.npy')
+    download_file('https://www.dropbox.com/s/33evycb4c997ya9/train.npy?dl=1','train.npy')
     print("Downloading done.\n")
 else:
     print("train.npy has already been downloaded. Did not download twice.\n")
 
 if not os.path.exists("valid.npy"):
     print("Downloading valid.npy of quickdraw\n")
-    download_file('https://www.dropbox.com/s/85bi617mccprtgm/valid.npy?dl=1','valid.npy')
+    download_file('https://www.dropbox.com/s/y2azjtm7glnq40x/valid.npy?dl=1','valid.npy')
     print("Downloading done.\n")
 else:
     print("valid.npy has already been downloaded. Did not download twice.\n")
 
 if not os.path.exists("test.npy"):
     print("Downloading test.npy of quickdraw\n")
-    download_file('https://www.dropbox.com/s/haknizflj6xe7th/test.npy?dl=1','test.npy')
+    download_file('https://www.dropbox.com/s/j3n419htp5pjkec/test.npy?dl=1','test.npy')
     print("Downloading done.\n")
 else:
     print("test.npy has already been downloaded. Did not download twice.\n")

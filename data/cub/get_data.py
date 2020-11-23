@@ -1,21 +1,16 @@
 """
 @author: Hayeon Lee
 2020/02/19
-Script for downloading, and reorganizing CUB few shot
+Script for downloading, and reorganizing CUB 
+for few shot classification
 Run this file as follows:
     python get_data.py
 """
 
-import pickle
 import os
-import numpy as np
 from tqdm import tqdm
 import requests
-import tarfile
-from PIL import Image
-import glob
-import shutil
-import pickle
+
 
 def download_file(url, filename):
     """
@@ -32,55 +27,18 @@ def download_file(url, filename):
                 f.write(chunk)
     return filename
 
-if not os.path.exists("CUB_200_2011.tgz"):
-    print("Downloading CUB_200_2011.tgz\n")
-    download_file('http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz','CUB_200_2011.tgz')
+
+if not os.path.exists("valid.npy"):
+    print("Downloading valid.npy of cub\n")
+    download_file('https://www.dropbox.com/s/2cv4lfdmaja0wq6/valid.npy?dl=1','valid.npy')
     print("Downloading done.\n")
 else:
-    print("Dataset already downloaded. Did not download twice.\n")
+    print("valid.npy has already been downloaded. Did not download twice.\n")
 
-if not os.path.exists("CUB_200_2011"):
-    tarname = "CUB_200_2011.tgz"
-    print("Untarring: {}".format(tarname))
-    tar = tarfile.open(tarname)
-    tar.extractall()
-    tar.close()
-    print("Removing original CUB_200_2011.tgz")
+if not os.path.exists("test.npy"):
+    print("Downloading test.npy of cub\n")
+    download_file('https://www.dropbox.com/s/1oxiehzuqvuil60/test.npy?dl=1','test.npy')
+    print("Downloading done.\n")
 else:
-    print("CUB_200_2011 folder already exists. Did not untarring twice\n")
+    print("test.npy has already been downloaded. Did not download twice.\n")
 
-print("Generate preprocessed valid.npy data")
-with open('val_cls.pkl', 'rb') as f:
-    data = pickle.load(f)
-x_lst = [[] for _ in range(len(data))]
-for c, x_per_cls in enumerate(tqdm(data)):
-    for x_path in x_per_cls:
-        img = Image.open(
-            os.path.join('CUB_200_2011', 'images', x_path)).resize((84, 84))
-        img = np.array(img)
-        if img.shape == (84, 84, 3):
-          x_lst[c].append(img / 255.0)
-    x_lst[c] = np.array(x_lst[c])
-
-np.save('valid.npy', np.array(x_lst))
-print("Done")
-
-print("Generate preprocessed test.npy data")
-with open('test_cls.pkl', 'rb') as f:
-    data = pickle.load(f)
-x_lst = [[] for _ in range(len(data))]
-for c, x_per_cls in enumerate(tqdm(data)):
-    for x_path in x_per_cls:
-        img = Image.open(
-            os.path.join('CUB_200_2011', 'images', x_path)).resize((84, 84))
-        img = np.array(img)
-        if img.shape == (84, 84, 3):
-          x_lst[c].append(img / 255.0)
-    x_lst[c] = np.array(x_lst[c])
-np.save('test.npy', np.array(x_lst))
-print("Done")
-
-# print("Removing original CUB_200_2011")
-# os.remove('CUB_200_2011.tgz')
-# shutil.rmtree('CUB_200_2011', ignore_errors=True)
-# os.remove('attributes.txt')

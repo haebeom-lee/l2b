@@ -27,21 +27,21 @@ def download_file(url, filename):
 
 if not os.path.exists("train.npy"):
     print("Downloading train.npy of miniImageNet\n")
-    download_file('https://www.dropbox.com/s/n3lgtnhi0qxqc5v/train.npy?dl=1','train.npy')
+    download_file('https://www.dropbox.com/s/llfp5p6vymiabzl/train.npy?dl=1','train.npy')
     print("Downloading done.\n")
 else:
     print("Dataset already downloaded. Did not download twice.\n")
 
 if not os.path.exists("valid.npy"):
     print("Downloading valid.npy of miniImageNet\n")
-    download_file('https://www.dropbox.com/s/wwbv9aoocd8cyvn/val.npy?dl=1','valid.npy')
+    download_file('https://www.dropbox.com/s/f1jz6valn6j42jk/valid.npy?dl=1','valid.npy')
     print("Downloading done.\n")
 else:
     print("Dataset already downloaded. Did not download twice.\n")
 
 if not os.path.exists("test.npy"):
     print("Downloading test.npy of miniImageNet\n")
-    download_file('https://www.dropbox.com/s/vntg718yvy6zgtr/test.npy?dl=1','test.npy')
+    download_file('https://www.dropbox.com/s/o0mg0b83978yu5y/test.npy?dl=1','test.npy')
     print("Downloading done.\n")
 else:
     print("Dataset already downloaded. Did not download twice.\n")
